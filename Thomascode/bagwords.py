@@ -3,7 +3,6 @@ import numpy as np
 import pickle
 from importlib import reload
 from collections import Counter
-from negation import *
 #import nltk
 #from nltk.corpus import stopwords
 
