@@ -4,7 +4,18 @@ import re
 import pandas as pd
 from nltk.stem.porter import *
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+
 df = pd.read_csv('drugsComTest_raw.tsv',error_bad_lines=False,warn_bad_lines=True,delimiter="\t")
+#df = pd.read_csv('drugsComTrain_raw.tsv',error_bad_lines=False,warn_bad_lines=True,delimiter="\t")
+=======
+df = pd.read_csv('drugsComTest_raw.tsv',error_bad_lines=False,warn_bad_lines=True,delimiter="\t")
+>>>>>>> parent of c1f6087... bayes bag of words
+=======
+df = pd.read_csv('drugsComTest_raw.tsv',error_bad_lines=False,warn_bad_lines=True,delimiter="\t")
+>>>>>>> parent of c1f6087... bayes bag of words
 print(df.columns)
 reviews = df.review
 stemmer = PorterStemmer()
