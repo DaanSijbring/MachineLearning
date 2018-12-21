@@ -5,9 +5,13 @@ from collections import Counter
 from nltk.corpus import stopwords
 from operator import itemgetter
 import matplotlib.pyplot as plt
+import os
 #%%
-testData = ps.read_csv('C:/Users/daan_/OneDrive/Documents/HMC/Machine Learning/drugsCom_raw/drugsComTest_raw.tsv', sep="\t")
-trainData = ps.read_csv('C:/Users/daan_/OneDrive/Documents/HMC/Machine Learning/drugsCom_raw/drugsComTrain_raw.tsv', sep="\t")
+os.chdir('C:\\Users\\daan_\\GitHub\\MachineLearning\\')
+#%%
+#%%
+testData = ps.read_csv('drugsCom_raw\\drugsComTest_raw.tsv', sep="\t")
+trainData = ps.read_csv('drugsCom_raw\\drugsComTrain_raw.tsv', sep="\t")
 #%%
 #transform text to lower case + remove special characters
 def tokenize(text):
