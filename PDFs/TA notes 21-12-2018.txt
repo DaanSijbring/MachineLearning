@@ -1,0 +1,4 @@
+Possible Extra Stuff:
+	Ensemble with all the models
+	Recurrent neural net with word2vec (charas/tensorflow)
+	Check class-specific accuracies (very important!)
