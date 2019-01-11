@@ -52,6 +52,8 @@ vectorizer = TfidfVectorizer(stop_words='english')
 X = vectorizer.fit_transform(train_clean_sentences)
  
 #%%
+print(len(X))
+#%%
 #get list of trainData ratings
 ratings = []
 for i in range(len(trainData['rating'])):
@@ -81,7 +83,7 @@ modelknn.fit(X,ratings)
 
 #%%
 #Use subset of destData (Kernel crashes with entire data)
-Test2 = Test[:10000]
+Test2 = Test[:5000]
 
 #%%
 #predict ratings using kNN - Replace "Test2" with "Test" in order to use whole dataset. 
@@ -96,9 +98,8 @@ for i in range(0,len(predicted_labels_knn)):
 #%%
 #plot difference
 plt.hist(diff)
-
 #%%
-# print % of correctly classified reviews
+# print % of correctly classified reviews (total)
 count = 0
 for i in range(0,len(predicted_labels_knn)):
     if predicted_labels_knn[i] == ratings_true[i]:
@@ -106,6 +107,32 @@ for i in range(0,len(predicted_labels_knn)):
 print(count/len(predicted_labels_knn)*100)
 
 #%%
+# print % of correctly classified reviews (per rating)
+for c in range(1, 11):
+    cat = 0
+    count = 0
+    for i in range(0,len(predicted_labels_knn)):
+        if ratings_true[i] ==c:
+            cat +=1
+            if predicted_labels_knn[i] == ratings_true[i]:
+                count += 1
+    print("cat: %d" % c)
+    print("len: %d" % cat)            
+    print(count/cat*100)
+
+#%%    
+#Average length of reviews (in characters) per rating
+"""
+for c in range(1,11):
+    total = 0
+    cat = 0
+    for i in range(0, len(train_clean_sentences)):
+        if ratings[i] == c:
+            cat +=1
+            total += len(train_clean_sentences[i])
+    print(total/cat)
+"""        
+#%%    
 # The next part was also included in the tutorial I used for this method, but I have not checked how accurate it is (it took too long)
 """    
 #------------------------OPTIONAL-----------------------------------
