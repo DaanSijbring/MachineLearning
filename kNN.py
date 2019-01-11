@@ -19,6 +19,9 @@ import re
 import numpy as np
 from collections import Counter
 from matplotlib import pyplot as plt
+from sklearn.metrics import average_precision_score
+from sklearn.metrics import precision_recall_curve
+from sklearn.metrics import precision_recall_fscore_support as score
 
  #%%
 stop = set(stopwords.words('english'))
@@ -50,9 +53,6 @@ for line in fp:
  
 vectorizer = TfidfVectorizer(stop_words='english')
 X = vectorizer.fit_transform(train_clean_sentences)
- 
-#%%
-print(len(X))
 #%%
 #get list of trainData ratings
 ratings = []
@@ -82,12 +82,7 @@ modelknn = KNeighborsClassifier(n_neighbors=1)
 modelknn.fit(X,ratings)
 
 #%%
-#Use subset of destData (Kernel crashes with entire data)
-Test2 = Test[:5000]
-
-#%%
-#predict ratings using kNN - Replace "Test2" with "Test" in order to use whole dataset. 
-predicted_labels_knn = modelknn.predict(Test2)
+predicted_labels_knn = modelknn.predict(Test)
 
 #%%
 #Calculate difference between predicted and actual ratings
@@ -96,42 +91,31 @@ for i in range(0,len(predicted_labels_knn)):
     diff.append(ratings_true[i] - predicted_labels_knn[i])
     
 #%%
-#plot difference
-plt.hist(diff)
-#%%
-# print % of correctly classified reviews (total)
-count = 0
-for i in range(0,len(predicted_labels_knn)):
-    if predicted_labels_knn[i] == ratings_true[i]:
-        count += 1
-print(count/len(predicted_labels_knn)*100)
+#precision and recall measures
+precision, recall, fscore, support = score(ratings_true, predicted_labels_knn) 
+p, r, f, s = score(ratings_true, predicted_labels_knn, average='weighted') 
 
 #%%
-# print % of correctly classified reviews (per rating)
-for c in range(1, 11):
-    cat = 0
-    count = 0
-    for i in range(0,len(predicted_labels_knn)):
-        if ratings_true[i] ==c:
-            cat +=1
-            if predicted_labels_knn[i] == ratings_true[i]:
-                count += 1
-    print("cat: %d" % c)
-    print("len: %d" % cat)            
-    print(count/cat*100)
-
-#%%    
-#Average length of reviews (in characters) per rating
-"""
-for c in range(1,11):
-    total = 0
-    cat = 0
-    for i in range(0, len(train_clean_sentences)):
-        if ratings[i] == c:
-            cat +=1
-            total += len(train_clean_sentences[i])
-    print(total/cat)
-"""        
+#print precision, recall and f score
+print("Rating\t Prec.\t Recall\t fscore\t Support")
+for i in range(0,10):
+    print(i+1,':\t',round(precision[i],3),'\t',round(recall[i],3),'\t', round(fscore[i],3),'\t', round(support[i],3))
+print('Total:\t',round(p,3),'\t',round(r,3),'\t',round(f,3),'\t',len(predicted_labels_knn))
+#%%
+#run algorithm for multiple n
+p_values = []   #Precision
+r_values = []   #Recall
+f_values = []   #F-Score
+n = 1000        #amount of included reviews
+for i in range(1,3):
+    modelknn = KNeighborsClassifier(n_neighbors=i)
+    modelknn.fit(X,ratings)
+    predicted_labels_knn = modelknn.predict(Test[:n])
+    p, r, f, s = score(ratings_true[:n], predicted_labels_knn, average='weighted')
+    p_values.append(p)
+    r_values.append(r)
+    f_values.append(f)
+    print('k=',i,'\t p=',round(p,3),'\t r=',round(r,3),'\t f=', round(f,3))
 #%%    
 # The next part was also included in the tutorial I used for this method, but I have not checked how accurate it is (it took too long)
 """    
