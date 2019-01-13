@@ -41,11 +41,11 @@ def processData(data):
     #process each review individually
     for i in tqdm.trange(len(data)):
         #Replace ' hex code with \'
-        rev = re.sub('&#039;',"'" ,filteredData.review[i])
+        rev = str.replace('&#039;',"'" ,filteredData.review[i])
         #Remove tokens not needed
-        rev = re.sub(r'[^a-zA-Z \']+', '', rev)
+        rev = str.replace(r'[^a-zA-Z \']+', '', rev)
         #Translate to lower case
-        rev = rev.lower()
+        #rev = rev.lower()
         #Tokenize using NLTK's tokenizer
         rev = nltk.word_tokenize(rev)
         #Stem the words
@@ -58,7 +58,7 @@ def processData(data):
     return filteredData
 #%%
     
-processedTestData = processData(testData)
+#processedTestData = processData(testData)
 processedTrainData = processData(trainData)
-pickle.dump(processedTestData, open( "testData.p", "wb" ) )
+#pickle.dump(processedTestData, open( "testData.p", "wb" ) )
 pickle.dump(processedTrainData, open( "trainData.p", "wb" ) )
