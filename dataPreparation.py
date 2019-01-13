@@ -11,6 +11,7 @@ import os
 import string
 import time 
 from tqdm import tqdm
+import pickle
 #%%
 os.chdir('C:\\Users\\daan_\\GitHub\\MachineLearning\\')
 #%%
@@ -57,4 +58,7 @@ def processData(data):
     return filteredData
 #%%
     
-a = processData(testData)
+processedTestData = processData(testData)
+processedTrainData = processData(trainData)
+pickle.dump(processedTestData, open( "testData.p", "wb" ) )
+pickle.dump(processedTrainData, open( "trainData.p", "wb" ) )
