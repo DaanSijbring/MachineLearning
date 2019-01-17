@@ -82,7 +82,7 @@ for i in range(len(testData['rating'])):
 #Once for the whole dataset
     
 # Clustering the trainData with KNN classifier
-modelknn = KNeighborsClassifier(n_neighbors=1, weights='distance', algorithm='ball_tree')
+modelknn = KNeighborsClassifier(n_neighbors=1, weights='distance')
 modelknn.fit(X,ratings)
 
 #%%
