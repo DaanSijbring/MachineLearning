@@ -14,21 +14,21 @@ depthX = [10, 20, 40, 60, 80, 100];
 
 figure(2);
 hold off;
-plot(depthX, depthData(:, 1));
+scatter(depthX, depthData(:, 1));
 hold on;
-plot(depthX, depthData(:, 2));
+scatter(depthX, depthData(:, 2));
 axis([0,100, 0, 1])
 xlabel("Decision Tree Depth");
 legend("Precision", "Recall");
 
-% vecSizeData = [0.671, 0.671; 0.398, 0.381; 0.537, 0.504; 0.604, 0.588; 0.641, 0.636; 0.664, 0.663];
-% vecSizeX = [10, 20, 40, 60, 80, 100];
+vecSizeData = [0.671, 0.671; 0.669, 0.669; 0.669, 0.669;];
+vecSizeX = [50, 100, 150];
 
-% figure(3);
-% hold off;
-% plot(vecSizeX, depthData(:, 1));
-% hold on;
-% plot(vecSizeX, depthData(:, 2));
-% axis([0,150, 0, 1])
-% xlabel("Word2Vec Vector Size");
-% legend("Precision", "Recall");
+figure(3);
+hold off;
+scatter(vecSizeX, vecSizeData(:, 1));
+hold on;
+scatter(vecSizeX, vecSizeData(:, 2));
+axis([40,160, 0, 1])
+xlabel("Word2Vec Vector Size");
+legend("Precision", "Recall");
