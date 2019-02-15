@@ -13,7 +13,7 @@ import time
 from tqdm import tqdm
 import pickle
 #%%
-os.chdir('C:\\Users\\daan_\\GitHub\\MachineLearning\\')
+# os.chdir('C:\\Users\\daan_\\GitHub\\MachineLearning\\')
 #%%
 #%%
 testData = ps.read_csv('drugsCom_raw\\drugsComTest_raw.tsv', sep="\t")
